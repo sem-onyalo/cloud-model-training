@@ -1,4 +1,4 @@
-# Deep Learning Model Training in the Cloud
+# Deep Neural Network Training in the Cloud
 
 ## Table of Contents
 
