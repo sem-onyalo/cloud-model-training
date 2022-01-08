@@ -1,95 +1,56 @@
-# Deep Neural Network Training in the Cloud
+# GAN Training Documentation
+
+Documenting an automated process for training and monitoring GAN models in AWS, Azure and GCP.
 
 ## Table of Contents
 
+* [Dependencies](#dependencies)
 * [AWS](#aws)
-    * [VM Setup](#vm-setup)
-    * [Training](#training)
-    * [VM Teardown](#vm-teardown)
+  * [VM Setup](#vm-setup)
+  * [Training](#training)
+  * [VM Teardown](#vm-teardown)
 
-## AWS
+## Dependencies
 
-### VM Setup
+* [Model training repository](https://github.com/sem-onyalo/gan-training-model)
+* [Model training monitor repository](https://github.com/sem-onyalo/gan-training-monitor-flask)
+* Infrastructure as code repositories
+  * [AWS IaC repository](https://github.com/sem-onyalo/gan-training-iac-aws-terraform)
+  * [Azure IaC repository](https://github.com/sem-onyalo/gan-training-iac-azure-terraform)
+  * [GCP IaC repository](https://github.com/sem-onyalo/gan-training-iac-gcp-terraform)
 
-1. Navigate to the EC2 service page.
+## Setup
 
-    ![AWS EC2 VM service search](imgs/aws-ec2.png)
+To setup training you'll need to create access roles for the VMs to write the training artifacts to blob storage. Then you'll need to clone the IaC repository for your chosen cloud provider.
 
-2. Scroll to the `Launch Instance` section and click the `Launch Instance` button.
+### Cloud Setup
 
-    ![AWS EC2 launch instance](imgs/aws-launch-instance.png)
+#### AWS
 
-3. Click on the `Community AMI` tab, type `deep learning ami` in the search bar, hit enter and then select your preferred deep learning AMI (in this case, the Amazon Linux Deep Learning AMI).
+1. Navigate to the IAM service page.
 
-    ![AWS deep learning AMI](imgs/aws-deep-learning-ami.png)
+    ![AWS IAM service search](imgs/aws/setup/1-iam.png)
 
-4. Select a GPU instance type (in this case, `p3.2xlarge`) and click on the `Review and Launch` button. On the `Review Instance Launch` page click on the `Launch` button.
+2. Click on the `Roles` link.
 
-    ![AWS deep learning AMI instance type](imgs/aws-instance-type.png)
-![AWS deep learning AMI instance type launch](imgs/aws-instance-type-launch.png)
+    ![AWS Roles](imgs/aws/setup/2-roles.png)
 
-5. If this is your first time you'll need to create a new key pair. Give it a name and download the file. Otherwise, you can select an existing key pair and check the box acknowledging that you have access to the file. Click the `Launch Instances` button.
+3. Click on the `Create role` button.
 
-    ![AWS new key pair](imgs/aws-key-pair-new.png)
-    ![AWS existing key pair](imgs/aws-key-pair-existing.png)
+    ![AWS create role](imgs/aws/setup/3-create-role.png)
 
-6. You can view your instance and its status on the `Instances` page under EC2 services.
+4. Select the `EC2` use case link and then click on the `Next: Permissions` button.
 
-    ![AWS instances](imgs/aws-instances.png)
+    ![AWS EC2 use case role](imgs/aws/setup/4-ec2-use-case.png)
 
-### Training
+5. Type `S3` in the search bar, select the checkbox for the `AmazonS3FullAccess` policy and then click on the `Next: Tags` button.
 
-1. Click on your instance and copy the `Public IPv4 address` under the `Details` tab.
+    ![AWS role policy](imgs/aws/setup/5-attach-policy.png)
 
-    ![AWS public IP address](imgs/aws-instance-ip-address.png)
+6. You can optionally add tags and then click the `Next: Review` button.
 
-2. Open a terminal, change the directory to where you downloaded your key pair, then SSH into your instance.
+    ![AWS role tags](imgs/aws/setup/6-role-tags.png)
 
-    ```
-    cd ~/Downloads/
+7. Enter the text "gan-training-blob-access" into the `Role name` text box and then click the `Create role` button.
 
-    ssh -i aws-gan-instance.pem ec2-user@<ip-address-here>
-    ```
-
-3. After SSH-ing into your instance you will be provided with a list of environments you can use to train your model. You can pick the environment based on your model framework.
-
-   ![AWS environment framework](imgs/aws-instance-ssh.png)
-
-    ```
-    source activate tensorflow_p37
-    ```
-
-4. Clone the git repository you'll be using for training, change the directory into the newly created code directory and start the training.
-
-    ```
-    git clone https://github.com/sem-onyalo/mlm-7-cgan-fashion-mnist.git
-
-    cd mlm-7-cgan-fashion-mnist
-
-    python main.py
-    ```
-
-5. When training is complete you can exit SSH.
-
-    ```
-    exit
-    ```
-
-6. If your training code saves evaluation data you can download them to your local computer.
-
-   ```
-   scp -i aws-gan-instance.pem -r ec2-user@<ip-address-here>:~/mlm-7-cgan-fashion-mnist/eval/* eval
-   ```
-
-### VM Teardown
-
-It is **very important** to terminate your instance once your training is complete so that you don't get charged extra for running an expensive EC2 instance.
-
-1. Click on your instance on the `Instances` page under EC2 services.
-
-    ![AWS instances](imgs/aws-instances.png)
-
-2. Click on the `Instance state` button, select `Terminate instance` and then click the `Terminate` button to confirm.
-
-    ![AWS terminate instance](imgs/aws-terminate-instance.png)
-    ![AWS terminate instance confirm](imgs/aws-terminate-instance-confirm.png)
+    ![AWS create role final](imgs/aws/setup/7-create-role.png)
