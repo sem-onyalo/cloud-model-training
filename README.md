@@ -88,6 +88,8 @@ The first step is to setup access for the training and monitoring scripts runnin
 
 3. You can use the `Evaluation epochs` dropdown to view the loss/accuracy plots, the generated images and the mini-batch training metrics for the selected evaluation epoch. This should help you to pick the model that generates the best images. Models for each evaluation epoch are stored in an S3 bucket called `gan-training-storage`.
 
+    ![AWS monitor page](imgs/aws/train/2-monitor-page.png)
+
     ![AWS storage container](imgs/aws/train/3-storage-container.png)
 
 ### AWS Training Teardown
