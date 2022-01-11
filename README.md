@@ -2,10 +2,11 @@
 
 Documenting an automated process for training and monitoring GAN models in AWS, Azure and GCP.
 
+The first step is to setup access for the training and monitoring scripts running on their VMs to read and write to blob storage. Then you'll need to clone the Infrastructure as Code (IaC) repository for your chosen cloud provider.
+
 ## Table of Contents
 
 * [Dependencies](#dependencies)
-* [Overview](#overview)
   * [Training and Monitor Repositories](#training-and-monitor-repositories)
 * [AWS](#aws)
   * [AWS Cloud Storage Setup](#aws-cloud-storage-setup)
@@ -22,10 +23,6 @@ Documenting an automated process for training and monitoring GAN models in AWS, 
   * [Azure IaC repository](https://github.com/sem-onyalo/gan-training-iac-azure-terraform)
 * GCP
   * [GCP IaC repository](https://github.com/sem-onyalo/gan-training-iac-gcp-terraform)
-
-## Overview
-
-The first step is to setup access for the training and monitoring scripts running on their VMs to read and write to blob storage. Then you'll need to clone the Infrastructure as Code (IaC) repository for your chosen cloud provider.
 
 ### Training and Monitor Repositories
 
