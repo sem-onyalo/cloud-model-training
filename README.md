@@ -15,9 +15,12 @@ Documenting an automated process for training and monitoring GAN models in AWS, 
 ## Dependencies
 
 * Terraform==1.0.10
-* Infrastructure as code repositories
+* AWS
+  * [AWS CLI](https://aws.amazon.com/cli/)
   * [AWS IaC repository](https://github.com/sem-onyalo/gan-training-iac-aws-terraform)
+* Azure
   * [Azure IaC repository](https://github.com/sem-onyalo/gan-training-iac-azure-terraform)
+* GCP
   * [GCP IaC repository](https://github.com/sem-onyalo/gan-training-iac-gcp-terraform)
 
 ## Overview
