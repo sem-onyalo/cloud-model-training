@@ -9,9 +9,10 @@ The first step is to setup access for the training and monitoring scripts runnin
 * [Dependencies](#dependencies)
   * [Training and Monitor Repositories](#training-and-monitor-repositories)
 * [AWS](#aws)
-  * [AWS Cloud Storage Setup](#aws-cloud-storage-setup)
-  * [AWS Training](#aws-training)
-  * [AWS Training Teardown](#aws-training-teardown)
+  * [Local Access](#aws-local-access)
+  * [Cloud Storage Setup](#aws-cloud-storage-setup)
+  * [Training](#aws-training)
+  * [Training VM Teardown](#aws-training-teardown)
 
 ## Dependencies
 
@@ -30,6 +31,14 @@ The first step is to setup access for the training and monitoring scripts runnin
 * [Model training monitor repository](https://github.com/sem-onyalo/gan-training-monitor-flask)
 
 ## AWS
+
+### AWS Local Access
+
+If you don't have local access to your AWS account run the command below and follow the prompts.
+
+```
+aws configure
+```
 
 ### AWS Cloud Storage Setup
 
@@ -63,7 +72,7 @@ The first step is to setup access for the training and monitoring scripts runnin
 
 ### AWS Training
 
-1. Open a new terminal, `cd` to your local code folder and clone the AWS IaC repository. Note that you will need to have local access to your AWS account (i.e. `aws configure`) to perform the following steps.
+1. Open a new terminal, `cd` to your local code folder and clone the AWS IaC repository.
 
     ```
     cd ~/code
