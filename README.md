@@ -9,10 +9,13 @@ The first step is to setup access for the training and monitoring scripts runnin
 * [Dependencies](#dependencies)
   * [Training and Monitor Repositories](#training-and-monitor-repositories)
 * [AWS](#aws)
-  * [Local Access](#aws-local-access)
-  * [Cloud Storage Setup](#aws-cloud-storage-setup)
+  * [Local Access Setup](#aws-local-access-setup)
+  * [Cloud Storage Access Setup](#aws-cloud-storage-access-setup)
   * [Training](#aws-training)
   * [Training VM Teardown](#aws-training-teardown)
+* [Azure](#azure) (WIP)
+  * [Local Access Setup](#azure-local-access-setup)
+  * [Cloud Storage Access Setup](#azure-cloud-storage-access-setup)
 
 ## Dependencies
 
@@ -20,9 +23,10 @@ The first step is to setup access for the training and monitoring scripts runnin
 * AWS
   * [AWS CLI](https://aws.amazon.com/cli/)
   * [AWS IaC repository](https://github.com/sem-onyalo/gan-training-iac-aws-terraform)
-* Azure
+* Azure (WIP)
+  * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
   * [Azure IaC repository](https://github.com/sem-onyalo/gan-training-iac-azure-terraform)
-* GCP
+* GCP (WIP)
   * [GCP IaC repository](https://github.com/sem-onyalo/gan-training-iac-gcp-terraform)
 
 ### Training and Monitor Repositories
@@ -32,15 +36,15 @@ The first step is to setup access for the training and monitoring scripts runnin
 
 ## AWS
 
-### AWS Local Access
+### AWS Local Access Setup
 
-If you don't have local access to your AWS account run the command below and follow the prompts.
+If you have never setup local access to your AWS account via the CLI then run the command below after you [install the CLI](https://aws.amazon.com/cli/).
 
 ```
 aws configure
 ```
 
-### AWS Cloud Storage Setup
+### AWS Cloud Storage Access Setup
 
 1. Navigate to the IAM service page.
 
@@ -105,3 +109,39 @@ aws configure
 ```
 terraform destroy -auto-approve
 ```
+
+## Azure
+
+### Azure Local Access Setup
+
+If you have never setup local access to your AWS account via the CLI then run the command below after you [install the CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
+
+```
+az login
+```
+
+### Azure Cloud Storage Access Setup
+
+1. Navigate to Azure Active Directory
+
+    ![Azure AAD service search](imgs/azure/setup/1-aad.png)
+
+2. Click on the `App registrations` link.
+
+    ![Azure app registrations](imgs/azure/setup/2-app-registrations.png)
+
+3. Client on the `New registration` link.
+
+    ![Azure new app registration](imgs/azure/setup/3-new-registration.png)
+
+4. Enter the text "gan-training-application" into the `Name` text box.
+
+    ![Azure app registration name](imgs/azure/setup/4-application-name.png)
+
+5. Specify which account types you want to grant access to the storage container. Shown below is the default option.
+
+    ![Azure app registration supported account type](imgs/azure/setup/5-supported-account-type.png)
+
+6. Click on the `Register` button.
+
+    ![Azure app register](imgs/azure/setup/6-register.png)
